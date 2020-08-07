@@ -105,7 +105,8 @@ let controllerUI = (function () {
         budgetLabel: '.budget__value',
         incomeLabel: '.budget__income--value',
         expenseLabel: '.budget__expenses--value',
-        percentageLabel: '.budget__expenses--percentage'
+        percentageLabel: '.budget__expenses--percentage',
+        dateLabel: '.budget__title--month'
     };
 
     return {
@@ -166,6 +167,16 @@ let controllerUI = (function () {
             }
         },
 
+        displayMonth: function () {
+            let monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+            let now, year;
+            now = new Date()
+            year = now.getFullYear();
+            month = now.getMonth()
+            date = now.getDate()
+            document.querySelector(domStrings.dateLabel).textContent = monthArray[month] + ' ' + date + 'th' + ' ' + year;
+        },
+
         getDOMStrings: function () {
             return domStrings;
         }
@@ -223,11 +234,12 @@ let controllerApp = (function (ctrlBudget, ctrlUI) {
             console.log('Hey I am active');
             ctrlUI.displayBudget({
                 budget: 0,
-                percentage: 0,
+                percentage: -1,
                 income: 0,
                 expense: 0
             })
             setUpEventListener();
+            ctrlUI.displayMonth()
         }
 
     };
